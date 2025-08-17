@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>纸间重生：校园二手教材循环的生态重构之路</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
+    <!-- 引入ECharts和水球图扩展 -->
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts-liquidfill@3.0.0/dist/echarts-liquidfill.min.js"></script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&amp;family=Noto+Serif+SC:wght@400;600;700&amp;family=KaiTi+SC:wght@300;400;700&amp;display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        paper: '#F5F0E6',
+                        paperLight: '#F9F5EE',
+                        paperDark: '#E8DCC8',
+                        ink: '#333333',
+                        accent: '#8C1C13',
+                        light: '#F9F5EE',
+                        dark: '#2D2416'
+                    },
+                    fontFamily: {
+                        'noto': ['"Noto Serif SC"', 'serif'],
+                        'ma': ['"Ma Shan Zheng"', 'cursive'],
+                        'kai': ['"KaiTi SC"', 'cursive', 'serif']
+                    },
+                }
+            }
+        }
+    </script>
+    
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-paper font-noto text-ink overflow-x-hidden">
+    <!-- 声明页面 -->
+    <div id="noticePage" class="notice-page">
+        <h2 class="text-3xl md:text-5xl mb-8 font-bold">学号：202421050916</h2>
+        <p class="text-2xl md:text-4xl mb-12">高月</p>
+        <p class="text-lg text-gray-400 mb-16">请使用pc端阅读页面</p>
+        <button id="continueBtn" class="bg-white text-black px-8 py-4 rounded-lg text-lg font-bold hover:bg-gray-200 transition-colors duration-300">
+            我已在PC端，继续浏览
+        </button>
+    </div>
+
+    <!-- 叠化过渡层 -->
+    <div class="page-transition" id="pageTransition"></div>
+     
+    <!-- 墨蝶元素 -->
+    <div id="ink-butterfly" class="fixed z-30 pointer-events-none transition-all duration-1500 ease-in-out">
+        <svg width="40" height="40" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <path d="M50,10 C30,20 10,40 20,60 C30,80 50,90 50,90 C50,90 70,80 80,60 C90,40 70,20 50,10 Z" fill="#333333" opacity="0.7"></path>
+            <path d="M50,10 C60,15 70,30 60,45 C50,60 50,60 50,60 C50,60 50,60 40,45 C30,30 40,15 50,10 Z" fill="#222222" opacity="0.9"></path>
+        </svg>
+    </div>
+
+    <!-- 页面容器 -->
+    <div class="relative z-10" id="mainContent" style="display: none;">
+        <!-- 第一部分：全屏图片 -->
+        <section class="min-h-screen flex items-center justify-center p-0 section-container relative overflow-hidden">
+                <!-- 使用指定图片链接，并添加更可靠的错误处理 -->
+                <img src="http://t0m73i2ks.hb-bkt.clouddn.com/11.jpg" 
+                          alt="堆积的二手教材" 
+                          style="filter: brightness(1.2)"
+                          class="absolute inset-0 w-full h-full object-cover"
+                          onerror="this.src='https://picsum.photos/id/24/1920/1080'; this.onerror=null;">
+         
+                <!-- 半透明遮罩增强后续内容可读性 -->
+                <div class="absolute inset-0 bg-dark/30 z-0"></div>
+    
+                <!-- 保留向下滚动指示 -->
+                <div class="absolute bottom-12 left-1/2 transform -translate-x-1/2 animate-bounce z-10">
+                    <i class="fa fa-angle-down text-3xl text-white/70"></i>
+                </div>
+        </section>
+    
+
+        <!-- 第二部分：开篇描述 -->
+        <section class="min-h-screen flex items-center justify-center p-6 md:p-12 section-fade-in section-container relative">
+            <div class="section-bg" id="section2-bg" style="background-image: url('http://t0m73i2ks.hb-bkt.clouddn.com/1.jpg'); opacity: 0.18;"></div>
+            <div class="max-w-3xl mx-auto text-center">
+                <div class="mb-12">
+                    <svg width="100" height="30" viewBox="0 0 200 50" class="mx-auto">
+                        <path d="M20,25 Q50,5 80,25 T140,25 Q170,5 200,25" stroke="#8C1C13" fill="none" stroke-width="2"></path>
+                    </svg>
+                </div>
+                
+                <p class="text-xl md:text-2xl lg:text-3xl leading-tight mb-8 font-medium text-hover">
+                    当90%的大学生支持使用二手教材，<br>为何仍有数百万吨课本被送往废品站？
+                </p>
+                
+                <p class="text-xl md:text-2xl lg:text-3xl leading-tight mb-12 font-medium text-hover">
+                    当教材循环使用一年可节省200多亿元，<br>为何校园内难以建立有效的循环机制？
+                </p>
+                
+                <div class="mt-12">
+                    <svg width="100" height="30" viewBox="0 0 200 50" class="mx-auto">
+                        <path d="M20,25 Q50,45 80,25 T140,25 Q170,45 200,25" stroke="#8C1C13" fill="none" stroke-width="2"></path>
+                    </svg>
+                </div>
+            </div>
+        </section>
+
+        <!-- 第三部分：网民留言 -->
+        <section class="min-h-screen flex items-center justify-center p-6 md:p-12 section-fade-in section-container relative">
+            <div class="section-bg" id="section3-bg" style="background-image: url('http://t0m73i2ks.hb-bkt.clouddn.com/2.jpg'); opacity: 0.2;"></div>
+            <div class="max-w-3xl mx-auto">
+                <div class="flex justify-center mb-8">
+                    <div class="text-accent font-ma text-2xl md:text-3xl relative">
+                        <span>网民之声</span>
+                        <div class="absolute -bottom-2 left-0 w-full h-1 bg-accent/30"></div>
+                    </div>
+                </div>
+                
+                <div class="bg-transparent p-8 md:p-12 rounded-lg shadow-xl border border-ink/10 mb-10">
+                    <div class="flex items-start mb-4">
+                        <div class="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center mr-4 mt-1 flex-shrink-0">
+                            <i class="fa fa-user text-accent"></i>
+                        </div>
+                        <div>
+                            <p class="font-semibold text-accent">凄尔</p>
+                            <p class="text-sm text-ink/70">中国政府网网民留言板</p>
+                        </div>
+                    </div>
+                    
+                    <div class="pl-14">
+                        <p class="text-lg leading-relaxed mb-4 text-hover">
+                            "几乎每个大学生每学期都要购买教材，对于部分学生来说，其实这有些浪费。有时候，学校统一购买的教材还会比学生自己在网络上购买的贵一些。"
+                        </p>
+                        <p class="text-lg leading-relaxed mb-4 text-hover">
+                            "针对大学教材的购买和使用，我建议：一、允许学生自愿选择是否参与学校的统一购置；二、有些教材没有学生勾画的痕迹，可以设置有偿或者无偿的教材回收点；同时，可以根据教材回收情况，在教材购置时由学生选择是否使用回收的教材，或提供给家庭贫困的同学使用。"
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="text-center text-ink/60 italic">
+                    <p>业内人士指出，高等教育阶段的教材循环仍依赖市场交易，因产业链梗阻、供需成本高等问题，尚未实现有效循环。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 第五部分：01循环受阻的教材生态（上） -->
+        <section class="min-h-screen flex items-center justify-center p-6 md:p-12 section-fade-in section-container relative">
+            <div class="section-bg" id="section5-bg" style="background-image: url('http://t0m73i2ks.hb-bkt.clouddn.com/3.jpg'); opacity: 0.22;"></div>
+            <div class="max-w-3xl mx-auto">
+                <div class="flex items-center mb-8">
+                    <div class="w-10 h-10 rounded-full bg-accent flex items-center justify-center text-light font-bold mr-4">01</div>
+                    <h2 class="font-ma text-2xl md:text-3xl text-accent">循环受阻的教材生态</h2>
+                </div>
+                
+                <div class="bg-transparent p-8 md:p-12 rounded-lg shadow-xl border border-ink/10 mb-10">
+                    <p class="text-lg leading-relaxed mb-6 text-hover">
+                        我国教材浪费问题已形成惊人的生态赤字。新闻出版总署的数据显示，2018年全国出版新版图书247108种，总印数25.17亿册，其中大量教材未能充分发挥效能。目前我国教材平均使用寿命仅半年，而发达国家可达5-10年。
+                    </p>
+                    
+                    <div class="my-8 p-6 bg-transparent rounded-lg border-l-4 border-accent">
+                        <p class="text-lg italic">
+                            以2007年高等教育在校生2625万人为例，按每人每年10册教材计算，年消耗量超2.62亿册。若实现5年循环使用，可节约195亿元资金及68.64万吨文化纸等资源，潜力巨大。
+                        </p>
+                    </div>
+                    
+                    <p class="text-lg leading-relaxed text-hover">
+                        随着科教兴国战略实施，2018年全国高校在校生达3104.2万（约为2010年1.3倍），教材需求激增导致部分辅修教材供不应求。二手书市场应运而生，既缓解供需矛盾，又契合共享经济与绿色消费理念。
+                    </p>
+                </div>
+                
+                <!-- 教材使用寿命对比水球图 -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-10">
+                    <div class="chart-item">
+                        <div class="chart-title">中国教材平均使用寿命</div>
+                        <div id="china-chart" class="liquid-chart-container"></div>
+                    </div>
+                    
+                    <div class="chart-item flex flex-col justify-center">
+                        <div class="difference-box flex-grow flex flex-col justify-center">
+                            <div class="text-lg font-semibold mb-2">使用寿命差距</div>
+                            <div class="difference-value">15 倍</div>
+                            <p>发达国家教材使用寿命是中国教材的15倍</p>
+                        </div>
+                    </div>
+                    
+                    <div class="chart-item">
+                        <div class="chart-title">发达国家教材平均使用寿命</div>
+                        <div id="dev-chart" class="liquid-chart-container"></div>
+                    </div>
+                </div>
+                <p class="data-source">数据来源：中国民主促进会《关于在中小学推行教科书循环使用的建议》</p>
+            </div>
+        </section>
+
+        <!-- 第六部分：01循环受阻的教材生态（下） -->
+        <section class="min-h-screen flex items-center justify-center p-6 md:p-12 section-fade-in section-container relative">
+            <div class="section-bg" id="section6-bg" style="background-image: url('http://t0m73i2ks.hb-bkt.clouddn.com/4.jpg'); opacity: 0.2;"></div>
+            <div class="max-w-3xl mx-auto">
+                <div class="bg-transparent p-8 md:p-12 rounded-lg shadow-xl border border-ink/10 mb-10">
+                    <p class="text-lg leading-relaxed mb-6 text-hover">
+                        教材回收呈现季节性特征，毕业季（5-7月）尤为突出。四川某废品回收商称，6月起教材回收量至少翻两倍，再生资源公司以0.5元/斤收购，但再生纸生产成本反而高于原浆纸。
+                    </p>
+                    
+                    <p class="text-lg leading-relaxed mb-6 text-hover">
+                        当前教材回收呈现两种模式：线下回收价格低廉，每斤仅0.5元，但由于再生纸生产成本较高，难以持续发展；线上交易增长迅速，孔夫子旧书网数据显示，近三年二手教材销售额年均增长超过30%，2020年达到1400万元。不过，相比每年数亿册的教材使用量，线上交易规模仍然有限。
+                    </p>
+                    
+                    <p class="text-lg leading-relaxed text-hover">
+                        高校教材循环面临实际困难。学生自费购买导致教材分散，二手交易存在匹配成本高和版权问题。相比之下，美国通过电商平台实现了60%的教材循环使用率。佐治亚大学研究显示，这种方式可以帮学生节省27%的费用。此外，像内布拉斯加大学这样的高校，还通过图书馆免费借阅计划进一步减轻学生负担。这些做法值得借鉴。
+                    </p>
+                </div>
+
+                <!-- 新增的并排图片 -->
+                <div class="image-row-container">
+                    <div class="image-row-item">
+                        <img src="https://image-cdn.tuchong.com/weili/image/l/1073959871069814930.jpeg" alt="学生在图书馆查阅教材">
+                    </div>
+                    <div class="image-row-item">
+                        <img src="https://image-cdn.tuchong.com/weili/image/l/1481713646432550920.jpeg" alt="二手教材交易市场">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+       
+
+        <!-- 第九部分：03阻滞循环的生态瓶颈 -->
+        <section class="min-h-screen flex items-center justify-center p-6 md:p-12 section-fade-in section-container relative">
+            <div class="section-bg" id="section9-bg" style="background-image: url('http://t0m73i2ks.hb-bkt.clouddn.com/5.jpg'); opacity: 0.22;"></div>
+            <div class="max-w-3xl mx-auto">
+                <div class="flex items-center mb-8">
+                    <div class="w-10 h-10 rounded-full bg-accent flex items-center justify-center text-light font-bold mr-4">03</div>
+                    <h2 class="font-ma text-2xl md:text-3xl text-accent">阻滞循环的生态瓶颈</h2>
+                </div>
+                
+                <div class="bg-transparent p-8 md:p-12 rounded-lg shadow-xl border border-ink/10 mb-10">
+                    <p class="text-lg leading-relaxed mb-6 text-hover">
+                        校园教材的循环利用本应是绿色环保的好事，却在现实中遭遇重重阻碍。走进任何一家废品回收站，都能看到堆积如山的旧教材等待处理。这些书本本可以继续发挥价值，却因为产业链、政策法规和教育体系的多重问题，最终难逃被化浆的命运。
+                    </p>
+                    
+                    <p class="text-lg leading-relaxed mb-6 text-hover">
+                        在回收环节，旧教材的处境十分尴尬。虽然二手书商给出的回收价是普通废纸的两倍多，达到每吨4000元左右，但高昂的人工分拣成本和有限的销售渠道让大多数书商望而却步。一位从业多年的二手书商坦言："教材版本更新没有统一规律，我们很难及时掌握哪些书还能用。"
+                    </p>
+                    
+                    <p class="text-lg leading-relaxed mb-6 text-hover">
+                        政策层面的滞后同样制约着教材循环。现行规定要求个人卖家必须取得《出版物经营许可证》并提供进货凭证，这对二手教材交易设置了过高门槛。孔夫子旧书网负责人孙雨田指出："法规没有区分新书和旧书、商家和个人，无形中增加了二手教材的法律风险。"
+                    </p>
+                </div>
+                
+                <div class="bg-transparent p-8 md:p-12 rounded-lg shadow-xl border border-ink/10">
+                    <p class="text-lg leading-relaxed mb-6 text-hover">教育系统的现状也给教材循环带来挑战。调查显示，61%的学生反映核心课程教材每三年就会更新版本，这使得旧教材迅速贬值。同时，学生在教材上做笔记的习惯与循环使用的要求相矛盾。四川某高校大二学生表示："不能勾画重点的教材用起来很不方便。"</p>
+                    
+                    <p class="text-lg leading-relaxed text-hover">卫生问题也是重要顾虑，42%的学生拒绝使用二手教材，特别是医学、幼教等专业。有家长直言："天天要翻的书，如果消毒不彻底，宁愿买新的。"</p>
+                </div>
+            </div>
+        </section>
+
+       <section class="min-h-screen flex items-center justify-center p-6 md:p-12 section-fade-in section-container relative">
+            <div class="section-bg" id="section9-bg" style="background-image: url('http://t0m73i2ks.hb-bkt.clouddn.com/6.jpg'); opacity: 0.18;"></div>
+            <div class="max-w-3xl mx-auto">
+                <div class="flex items-center mb-8">
+                </div>
+                
+                <div class="bg-transparent p-8 md:p-12 rounded-lg shadow-xl border border-ink/10 mb-10">
+                    <p class="text-lg leading-relaxed mb-6 text-hover">
+                     尽管线上二手交易平台兴起，但教材回收仍缺乏统一、高效的流通体系。学生手中的旧书往往往往只能低价卖给废品站，而真正需要的人却难以找到合适的购买渠道。   
+                    </p>
+                    
+                    <p class="text-lg leading-relaxed mb-6 text-hover">
+                        中国扶贫基金会、北京师范大学中国公益研究院于2018年5月联合发布针对中西部贫困地区的《乡村儿童阅读报告》。该报告显示，“高达74%的受访乡村儿童一年阅读的课外读物不足10本；更有超过36%的儿童一年只读了不到3本书；超过71%的乡村家庭藏书不足10本。”
+                    </p>
+                    
+                    <p class="text-lg leading-relaxed mb-6 text-hover">
+                        乡村孩子缺书看，旧书却成堆报废报废——这两种截然不同的场景共存于同一片土地上，敲响着资源错位的警钟。信息不对称导致大量可用教材被直接化浆，而非进入循环系统。
+                    </p>
+                </div>
+                
+                <div class="bg-transparent p-8 md:p-12 rounded-lg shadow-xl border border-ink/10">
+                    <p class="text-lg leading-relaxed mb-6 text-hover">更深层的阻力来自文化观念。不少家庭认为"孩子的书不能卖"，担心会"流失知识"。这种观念在客观上减少了二手教材的供应。</p>
+                    
+                    <p class="text-lg leading-relaxed text-hover">面对这些困境，教材循环系统需要产业链、政策制定者和教育工作者共同破局。只有当旧教材的流通比销毁更有利可图，当法规为二手交易开辟绿色通道，当师生真正接受循环使用的理念，"教材山"的问题才能得到根本解决。</p>
+                </div>
+            </div>
+        </section>
+      
+        <!-- 第十部分：04环保意义 -->
+        <section class="min-h-screen flex items-center justify-center p-6 md:p-12 section-fade-in section-container relative">
+            <div class="section-bg" id="section10-bg" style="background-image: url('http://t0m73i2ks.hb-bkt.clouddn.com/7.jpg'); opacity: 0.18;"></div>
+            <div class="max-w-3xl mx-auto">
+                <div class="flex items-center mb-8">
+                    <div class="w-10 h-10 rounded-full bg-accent flex items-center justify-center text-light font-bold mr-4">04</div>
+                    <h2 class="font-ma text-2xl md:text-3xl text-accent">环保意义：二手教材助力节能减排</h2>
+                </div>
+                
+                <div class="bg-transparent p-8 md:p-12 rounded-lg shadow-xl border border-ink/10 mb-10">
+                    <p class="text-lg leading-relaxed mb-6 text-hover">
+                        造纸业带来的远远不止是木材的浪费，还是对大气、水资源等多种生态资源的破坏。
+                    </p>
+                    
+                    <p class="text-lg leading-relaxed mb-6 text-hover">
+                        在大气污染方面，制浆造纸生产过程几乎每个工段或多或少会产生一些大气污染物，主要包括两类: 工艺过程中物料扬尘或喷放过程产生扩散及挥发性物质; 蒸发或燃烧过程产生的污染物。从成分来看包括粉尘、还原性含硫气体、氧化性含硫气体、Cl₂、ClO₂、CO₂等。这些成分会直接或间接地导致酸雨，对生态环境破坏极大。
+                    </p>
+                    
+                    <p class="text-lg leading-relaxed mb-6 text-hover">
+                        在对水资源的影响方面，造纸业废水排放量占全国工业废水总排放量的 16.1%（2004年）。
+                    </p>
+                    
+                    <div class="my-8 p-6 bg-transparent rounded-lg border-l-4 border-accent">
+                        <p class="text-lg italic">
+                            废水排放量和化学需氧量（COD）排放量分别占全国工业总量的 18% 和 26%，居各行业首位。但造纸业产值仅占全国工业总产值的 1.49%，与其污染排放量极不匹配。且单位生产能耗高，每吨纸耗水约 140吨，远高于世界平均水平。
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="flex justify-center mb-10">
+                    <div class="w-full max-w-lg h-64 bg-light/40 rounded-lg overflow-hidden shadow-lg">
+                        <canvas id="教材循环环保效益" class="w-full h-full p-4"></canvas>
+                    </div>
+                </div>
+                <p class="data-source">数据来源：教育部《2019年全国教育事业发展统计公报》</p>
+        </div></section>
+
+        <!-- 第十部分：环保意义 -->
+        <section class="min-h-screen flex items-center justify-center p-6 md:p-12 section-fade-in section-container relative">
+            <div class="section-bg" id="section11-bg" style="background-image: url('http://t0m73i2ks.hb-bkt.clouddn.com/8.jpg'); opacity: 0.18;"></div>
+            <div class="max-w-3xl mx-auto">
+                <div class="flex items-center mb-8">
+                </div>
+                
+                <div class="bg-transparent p-8 md:p-12 rounded-lg shadow-xl border border-ink/10 mb-10">
+                    <p class="text-lg leading-relaxed mb-6 text-hover">
+                        随着科技与社会的发展，人类与资源的矛盾日益尖锐，自然资源与可再生资源都在大幅减少，因此，资源的循环再利用，不仅是我国发展经济和社会进步中一项重大的战略方针，同时也是实现资源优化配置、缓解资源紧张的重要手段。
+                    </p>
+                    
+                    <p class="text-lg leading-relaxed mb-6 text-hover">
+                        使用二手教材是实现资源再利用的一种有效方式，减少了学生对新教材的需求，有效减少教材反复印刷的频率，从而使得新教材的生产量减少，对自然资源起到了一定的节约作用。
+                    </p>
+                    
+                    <p class="text-lg leading-relaxed mb-6 text-hover">
+                        根据教育部发布的《2019年全国教育事业发展统计公报》，2019年我国在校中小学生人数约为1.94亿，以每个学生一年两学期平均使用10册课本计算，一年就要用课本20亿册以上。按每人每学期课本平均重1500克计算，如果课本连续使用5年，可节约528万吨文化纸，生产这些纸要耗费300万亩木材、52800万吨纯净水和633.5万吨煤。
+                    </p>
+
+                   <!-- 新增的并排图片 -->
+                   <div class="image-row-container">
+                         <div class="image-row-item">
+                               <img src="https://image-cdn.tuchong.com/weili/image/l/903322710072885266.jpeg" alt="造纸厂对环境的污染">
+                        </div>
+                        <div class="image-row-item">
+                               <img src="https://image-cdn.tuchong.com/weili/image/l/2106989553923653663.jpeg" alt="森林资源保护">
+                       </div>
+               </div>
+ </div></section>
+
+        <!-- 第十一部分：全球意义 -->
+<section class="min-h-screen flex items-center justify-center p-6 md:p-12 section-fade-in section-container relative">
+    <div class="section-bg" id="section11-bg" style="background-image: url('http://t0m73i2ks.hb-bkt.clouddn.com/9.jpg'); opacity: 0.18;"></div>
+            <div class="max-w-3xl mx-auto">
+                <div class="flex items-center mb-8">
+                </div>
+                
+                <div class="bg-transparent p-8 md:p-12 rounded-lg shadow-xl border border-ink/10 mb-10">
+                    <p class="text-lg leading-relaxed mb-6 text-hover">
+                        欧洲环境署统计显示，二手书交易每年为欧盟减少约1200万吨碳排放，相当于240万辆汽车的年度排放量。英国学生联合会（NUS）发起的“BookCycle”项目，通过校园捐赠系统使教材循环率提升40%，并推动70%的学生养成优先选择二手书的习惯。这些案例证明，教材循环不仅是经济选择，更是全球可持续教育的共识。 
+                    </p>
+                    
+                    <p class="text-lg leading-relaxed mb-6 text-hover">
+                        每一次教材的循环，都是一次对地球的小小减负，也可能点亮一个孩子的学习之路。在南方小镇，五年级的小光就意外成为了这循环链条中的一环。一场暴雨毁了他的语文课本。面对周一急需用书的窘境和拮据的家境，买新书成了难题。情急之下，他找到了镇上收废品的王爷爷。令人惊喜的是，王爷爷舍不得把品相尚好的课本当废纸卖掉，特意留了一些，其中恰好就有小光急需的那本语文书。
+                    </p>
+                    
+                    <p class="text-lg leading-relaxed text-hover">
+                        这本旧书不仅解决了小光的燃眉之急，书页上前主人留下的工整笔记，更成了他学习的“秘密武器”，帮他划出了重点，理解了难点。一本本应流向造纸厂的课本，就这样在小光手中延续了使命，节省了新资源消耗的同时，也让知识跨越了使用者，实现了温暖的传递。
+                    </p>      
+        
+                </div>
+                
+                <div class="highlighted-summary" id="summary-text">每本被循环使用的教材，都在默默做三件事：帮你省钱、让知识传下去、为地球减负。循环的不只是课本，更是知识本身。</div>
+                </div>
+            
+        </section>
+
+        <!-- 第十二部分：数据与方法论 -->
+        <section class="min-h-screen flex items-center justify-center p-6 md:p-12 section-fade-in section-container relative">
+            <div class="section-bg" id="section12-bg" style="background-image: url('http://t0m73i2ks.hb-bkt.clouddn.com/10.jpg'); opacity: 0.18;"></div>
+            <div class="max-w-3xl mx-auto">
+                <div class="text-center mb-10">
+                    <h2 class="font-ma text-2xl md:text-3xl text-accent inline-block">
+                        数据与方法论
+                        <div class="w-full h-1 bg-accent/30 mt-2"></div>
+                    </h2>
+                </div>
+                
+                <div class="bg-transparent p-8 md:p-12 rounded-lg shadow-xl border border-ink/10">
+                    <div class="mb-8">
+                        <h3 class="text-xl font-semibold mb-4 text-accent">1. 宏观数据来源：</h3>
+                        <ul class="list-disc pl-6 space-y-2">
+                            <li class="text-hover">教育2020"收官"系列的第七场新闻发布会</li>
+                            <li class="text-hover">国家新闻出版署数据</li>
+                            <li class="text-hover">绿色发展背景下高校二手市场发展的SWOT分析及对策研究——以江南大学二手教材为例（期刊）中国商论2020 (24)</li>
+                            <li class="text-hover">中华人民共和国教育部公开文件</li>
+                            <li class="text-hover">孔夫子旧书网交易数据白皮书</li>
+                        </ul>
+                    </div>
+                    
+                    
+                </div>
+                
+                <div class="mt-16 text-center">
+                    <div class="inline-block p-4 bg-light/60 rounded-full shadow-lg">
+                        <svg width="60" height="60" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="opacity-70">
+                            <path d="M50,10 C30,20 10,40 20,60 C30,80 50,90 50,90 C50,90 70,80 80,60 C90,40 70,20 50,10 Z" fill="#8C1C13" opacity="0.7"></path>
+                            <path d="M50,10 C60,15 70,30 60,45 C50,60 50,60 50,60 C50,60 50,60 40,45 C30,30 40,15 50,10 Z" fill="#5D1313" opacity="0.9"></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+    
+    <script src="script.js"></script>
+    </div>
+</body>
+</html>
