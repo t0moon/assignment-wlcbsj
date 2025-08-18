@@ -43,9 +43,9 @@
 <body class="bg-paper font-noto text-ink overflow-x-hidden">
     <!-- 声明页面 -->
     <div id="noticePage" class="notice-page">
-        <h2 class="text-3xl md:text-5xl mb-8 font-bold">学号：202421050916</h2>
-        <p class="text-2xl md:text-4xl mb-12">高月</p>
-        <p class="text-lg text-gray-400 mb-16">请使用pc端阅读页面</p>
+        <h2 class="text-3xl md:text-5xl mb-8 font-bold">高月</h2>
+        <p class="text-2xl md:text-4xl mb-12">202421050916</p>
+        <p class="text-lg text-gray-400 mb-16">请使用PC端</p>
         <button id="continueBtn" class="bg-white text-black px-8 py-4 rounded-lg text-lg font-bold hover:bg-gray-200 transition-colors duration-300">
             我已在PC端，继续浏览
         </button>
@@ -226,7 +226,78 @@
             </div>
         </section>
 
-       
+        <!-- 第七部分：02校园二手教材问卷全景分析（上） -->
+        <section class="min-h-screen flex items-center justify-center p-6 md:p-12 section-fade-in section-container relative">
+            <div class="section-bg" id="section7-bg" style="background-image: url('https://shujuxinwen-1373010310.cos.ap-chengdu.myqcloud.com/%E7%94%9F%E6%88%90%E7%BA%AF%E8%89%B2%E5%9B%BE.png');"></div>
+            <div class="max-w-3xl mx-auto">
+                <div class="flex items-center mb-8">
+                    <div class="w-10 h-10 rounded-full bg-accent flex items-center justify-center text-light font-bold mr-4">02</div>
+                    <h2 class="font-ma text-2xl md:text-3xl text-accent">校园二手教材问卷全景分析</h2>
+                </div>
+                
+                <div class="bg-transparent p-8 md:p-12 rounded-lg shadow-xl border border-ink/10 mb-8">
+                    <p class="text-lg leading-relaxed mb-6 text-hover">
+                        为深入探究高校教材循环利用现状，我们于2025年7月至8月开展了覆盖全国多所高校的问卷调查，结合四川传媒学院等大学的现有调研数据，得出以下结果：
+                    </p>
+                    
+                    <p class="text-lg leading-relaxed mb-6 text-hover">
+                        在校园里，二手教材的推广似乎面临着一个尴尬的矛盾：绝大多数学生认同其价值，但真正付诸实践的人却有限。一项针对高校学生的调查显示，近86.36%的学生支持使用二手教材的理念，（其中 "非常赞同" 占 45.45%，"赞同" 占 40.91%），但其中仅有 36.36% 的人真正购买过二手书。而在那些表示支持却未行动的学生中，阻碍他们的主要因素集中在 "版本不符 / 过时风险"（47.73%）、"品相不佳（笔记 / 破损）"（38.64%），以及 "担心卫生问题"“渠道不便”（均为 27.27%）。
+                    </p>
+                </div>
+                
+                <!-- 二手教材支持度与实际购买率对比 -->
+                <div class="mb-10 bg-light/40 rounded-lg overflow-hidden shadow-lg p-6">
+                    <div class="chart-container">
+                        <div class="chart-title">
+                            <div class="main-title">二手教材支持度与实际购买率对比</div>
+                            <div class="sub-title">数据来源：2025年高校教材使用情况调查问卷</div>
+                        </div>
+                        <div id="support-purchase-chart" style="width: 100%; height: 300px;"></div>
+                    </div>
+                </div>
+                
+                <div class="bg-transparent p-8 md:p-12 rounded-lg shadow-xl border border-ink/10">
+                    <p class="text-lg leading-relaxed text-hover">
+                        这种理念与行为的反差，在教材的最终去向中体现得更为明显。毕业季时，43.18%学生选择将旧教材作为废品出售，均价仅为0.8元/公斤；仅有15.91%会捐赠给学弟学妹，2.27%捐赠给公益组织，而通过二手平台转售的比例为11.36%，在校园跳蚤市场或社群转售的更是仅占4.55%。这意味着大量教材并未进入循环体系，而是以极低的价值被处理，甚至直接沦为废纸。
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 第八部分：02校园二手教材问卷全景分析（下） -->
+        <section class="min-h-screen flex items-center justify-center p-6 md:p-12 section-fade-in section-container relative">
+            <div class="section-bg" id="section8-bg" style="background-image: url('https://shujuxinwen-1373010310.cos.ap-chengdu.myqcloud.com/%E7%94%9F%E6%88%90%E7%BA%AF%E8%89%B2%E5%9B%BE.png');"></div>
+            <div class="max-w-3xl mx-auto">
+                <div class="bg-transparent p-8 md:p-12 rounded-lg shadow-xl border border-ink/10 mb-10">
+                    <p class="text-lg leading-relaxed mb-6 text-hover">
+                        学生选择二手教材的动机中，"节约费用"以92.11%的占比高居首位，其次是"环保"(55.26%)和"获得附赠笔记"(47.37%)。然而，他们的支付意愿普遍较低：31.82%的学生只愿意接受原价30%以下的二手教材，仅有18.18%的人能接受半价以上的交易。这一价格预期与废品回收价（约1元/公斤）之间的差距，凸显了二手教材在价值认知上的矛盾。
+                    </p>
+                    
+                    <p class="text-lg leading-relaxed mb-6 text-hover">
+                        在获取途径上，校园内部渠道占据绝对主导——54.55%的学生通过"同学转手"获得二手教材，50%依赖"校园跳蚤市场"，而专业二手平台的使用率仅为18.18%。这种高度依赖熟人交易的现象，反映出学生对非官方渠道的信任缺失。
+                    </p>
+                </div>
+                
+                <!-- 教材去向分布（半径模式） -->
+                <div class="mb-10 bg-light/40 rounded-lg overflow-hidden shadow-lg p-6">
+                    <div style="text-align: center; font-size: 18px; font-weight: bold; color: #2c3e50; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px solid #f0f0f0;">
+                        教材去向分布（半径模式）
+                    </div>
+                    <div id="radius-chart" style="width: 100%; height: 400px;"></div>
+                </div>
+                <p class="data-source">数据来源：2025年高校教材使用情况调查问卷</p>
+                
+                <div class="bg-transparent p-8 md:p-12 rounded-lg shadow-xl border border-ink/10">
+                    <p class="text-lg leading-relaxed mb-6 text-hover">
+                        面对现有痛点，学生们对更规范的循环体系表现出强烈需求。59.09%的受访者希望建立校园专用APP，25%支持学校统一回收教材，15.91%倾向于接受社团组织的捐赠系统。在激励机制上，"教材消毒保障"、"新旧版本检测"和"交易便捷性"成为最受关注的三大要素。
+                    </p>
+                    
+                    <p class="text-lg leading-relaxed text-hover">
+                        这些数据勾勒出一个清晰的图景：二手教材的校园循环不仅需要解决渠道和信任问题，还需在定价机制、品控标准和便利性上找到平衡点。当一本教材的命运在废品站与循环系统之间摇摆时，或许正是校园可持续消费习惯培养的关键时刻。
+                    </p>
+                </div>
+            </div>
+        </section>
 
         <!-- 第九部分：03阻滞循环的生态瓶颈 -->
         <section class="min-h-screen flex items-center justify-center p-6 md:p-12 section-fade-in section-container relative">
@@ -405,7 +476,16 @@
                         </ul>
                     </div>
                     
-                    
+                    <div>
+                        <h3 class="text-xl font-semibold mb-4 text-accent">2. 问卷调查：</h3>
+                        
+                        <ul class="list-disc pl-6 space-y-2">
+                            <li class="text-hover">调查时间：2025年6月26日-8月14日</li>
+                            <li class="text-hover">抽样方法：分层随机抽样</li>
+                            <li class="text-hover">工具：结构化问卷</li>
+                            <li class="text-hover">注：本文中提到的教材为广义的教材，即凡是有利于学习者增长知识或发展技能的材料都可称之为教材。</li>
+                        </ul>
+                    </div>
                 </div>
                 
                 <div class="mt-16 text-center">
