@@ -368,7 +368,7 @@ function initSupportPurchaseChart() {
     // 渲染图表
     chart.setOption(option);
     
-    // 响应式调整
+    // 响应调整
     window.addEventListener('resize', function() {
         chart.resize();
     });
